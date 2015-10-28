@@ -3,23 +3,28 @@ import logging
 import sys
 import os
 from datetime import datetime
+
+from pysys_checker import Pysys
 # from beaker.container import logger
 class Pylogger:
-    def init_log(self):   
+    def init_log(self, args):   
         # 创建一个logger 
         logger = logging.getLogger('checker_logger') 
         logger.setLevel(logging.ERROR) 
         
-        log_dir='/var/log/crawler_checker'
+        log_dir=str(Pysys().main(args))
         now = datetime.now().strftime("%m%d%H%M%S")
-        if os.path.exists(log_dir):
-            log_dir = log_dir+'/'+str(now)+".log"
-            # 创建一个handler，用于写入日志文件 
-            fh = logging.FileHandler(log_dir) 
-            fh.setLevel(logging.ERROR) 
-        else:
-            print 'log_dir Error! please make dir path: /var/log/crawler_checker!'
+
+        try:
+            if not os.path.isdir(log_dir):
+                os.mkdir(log_dir)
+        except OSError, e:
+            print 'please mkdir log path!'
             sys.exit(1)
+        log_dir = log_dir+'/'+str(now)+".log"
+        # 创建一个handler，用于写入日志文件 
+        fh = logging.FileHandler(log_dir) 
+        fh.setLevel(logging.ERROR) 
            
     #     # 再创建一个handler，用于输出到控制台 
     #     ch = logging.StreamHandler() 

@@ -7,7 +7,7 @@ class MongoRegulation:
         #product id
         try:
             item_id = data['show_product_id']
-        except:
+        except KeyError, e:
             logger.error("show_product_id is KeyError")
         data = dict(data)
         self.pyassert('goods', item_id, 'url', data, unicode, logger)    
@@ -16,17 +16,17 @@ class MongoRegulation:
 			if type(float(data['list_price'])) == float:
 				pass
         except ValueError, e:
-            logger.error(self.item_error_msg('goods', item_id, 'list_price num'))
+            logger.error(self.item_error_msg('goods', item_id, 'list_price type'))
         try:
             if type(float(data['current_price'])) == float:
                 pass
         except ValueError, e:
-            logger.error(self.item_error_msg('goods', item_id, 'current_price num'))
+            logger.error(self.item_error_msg('goods', item_id, 'current_price type'))
         try:
             if float(data['list_price'])<float(data['current_price']):
                 logger.error(self.item_error_msg('goods', item_id, 'current_price > list_price'))
         except ValueError, e:
-                logger.error(self.item_error_msg('goods', item_id, 'current_price or list_price num'))
+                logger.error(self.item_error_msg('goods', item_id, 'current_price type or list_price type'))
         self.pyassert('goods', item_id, 'desc', data, unicode, logger)
         self.pyassert('goods', item_id, 'color', data, list, logger)
         if len(data['color']) != len(set(data['color'])):
@@ -49,7 +49,7 @@ class MongoRegulation:
     def color_checker(self, data, logger):
         try:
             item_id = data['show_product_id']
-        except:
+        except KeyError, e:
             logger.error("show_product_id is KeyError")
       
         self.pyassert('goods_colors', item_id, 'from_site', data, unicode, logger)
@@ -59,27 +59,31 @@ class MongoRegulation:
         
     #skuItem
     def sku_checker(self, data, logger):
+        data_id = str(data['_id'])
         try:
             item_id = data['show_product_id']
-        except:
+        except KeyError, e:
             logger.error("show_product_id is KeyError")
-        self.pyassert('skus', item_id, 'from_site', data, unicode, logger)
-        self.pyassert('skus', item_id, 'id', data, unicode, logger)
-        if float(data['list_price'])<float(data['current_price']):
-            logger.error(self.item_error_msg('skus', item_id, 'current_price or list_price'))
+        self.pyassert('skus_id'+data_id, item_id, 'from_site', data, unicode, logger)
+        self.pyassert('skus_id'+data_id, item_id, 'id', data, unicode, logger)
+        try:
+            if float(data['list_price'])<float(data['current_price']):
+                logger.error(self.item_error_msg('skus_id'+data_id, item_id, 'current_price > list_price'))
+        except ValueError, e:
+            logger.error(self.item_error_msg('skus_id'+data_id, item_id, 'current_price type or list_price type'))
         try:
             if not type(float(data['list_price'])):
 				pass
         except ValueError,e:
-            logger.error(self.item_error_msg('skus', item_id, 'list_price num'))
+            logger.error(self.item_error_msg('skus_id'+data_id, item_id, 'list_price type'))
         try:
 			if not type(float(data['current_price'])):
 				pass
         except ValueError, e:
-            logger.error(self.item_error_msg('skus', item_id, 'current_price num'))
-        self.pyassert('skus', item_id, 'is_outof_stock', data, bool, logger)
-        self.pyassert('skus', item_id, 'color', data, unicode, logger)
-        self.pyassert('skus', item_id, 'size', data, unicode, logger)
+            logger.error(self.item_error_msg('skus_id'+data_id, item_id, 'current_price type'))
+        self.pyassert('skus_id'+data_id, item_id, 'is_outof_stock', data, bool, logger)
+        self.pyassert('skus_id'+data_id, item_id, 'color', data, unicode, logger)
+        self.pyassert('skus_id'+data_id, item_id, 'size', data, unicode, logger)
         
     def item_error_msg(self, collection, item_id, column_type):
         return item_id+": "+collection+" --"+column_type+"-- is not correct"

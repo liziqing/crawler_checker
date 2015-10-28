@@ -24,7 +24,7 @@ class HelpCommand(pycommand.CommandBase):
 
 class CommandArgs(pycommand.CommandBase):
   
-    usagestr = 'usage: full-example [-f <filename>] <command> [<args>]'
+    usagestr = 'usage: checker [-f <filename>] <command> [<args>]'
     description = (
         'Commands:\n'
         '   help         show this help information\n'
@@ -32,14 +32,16 @@ class CommandArgs(pycommand.CommandBase):
     )
 
     # Mapping of subcommands
-    commands = {'help': HelpCommand,
-                'version': VersionCommand}
+    commands = {
+        'help': HelpCommand,
+        'version': VersionCommand
+    }
 
-    optionList = (('file', ('f', '<filename>', 'use specified file')), )
+    optionList = (('log_path', ('l', '<log_path>', 'use specified log_path')), )
 
     # Optional extra usage information
     usageTextExtra = (
-        "See 'full-example help <command>' for more information on a "
+        "See 'checker help <command>' for more information on a "
         "specific command."
     )
 
@@ -76,7 +78,7 @@ class CommandArgs(pycommand.CommandBase):
         cmd.registerParentFlag('file', self.flags.file)
 
         if cmd.error:
-            print('full-example {cmd}: {error}'
+            print('checker {cmd}: {error}'
                   .format(cmd=self.args[0], error=cmd.error))
             return 1
         else:
