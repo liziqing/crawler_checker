@@ -41,6 +41,7 @@ class MongoRegulation:
         self.pyassert('goods', item_id, 'from_site', data, unicode, logger)
         self.pyassert('goods', item_id, 'product_type', data, unicode, logger)
         self.pyassert('goods', item_id, 'category', data, unicode, logger)
+        self.pyassert('goods', item_id, 'cover', data, unicode, logger)
         if data['gender'] not in gender_list:
             logger.error(self.item_error_msg('goods', item_id, 'gender'))
                          
