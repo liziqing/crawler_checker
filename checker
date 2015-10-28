@@ -1,7 +1,11 @@
 #!/usr/bin/env python
 from pymongo import MongoClient
+import pycommand
+
 from shiji_mongo_regulation import MongoRegulation
 from pylogger import Pylogger
+from command_args import CommandArgs
+
 connection = MongoClient('127.0.0.1', 27017)
 db = connection.shiji_shop
 goods = db.goods
@@ -10,12 +14,24 @@ skus = db.skus
 
 logger = Pylogger().init_log()
 mongoRegulation = MongoRegulation()
+
+print 'Starting to check collection goods'
 for good in goods.find():
     mongoRegulation.item_checker(good, logger)
- 
+print 'Successfully goods checked done!'
+
+print 'Starting to check collection goods_colors'
 for color in colors.find():
     mongoRegulation.color_checker(color, logger)
- 
+print 'Successfully goods checked done!'
+
+print 'Starting to check collection skus'
 for sku in skus.find():
     mongoRegulation.sku_checker(sku, logger)
-    
+print 'Successfully goods checked done!'
+
+
+print "---------------------------------------------------"
+pycommand.run_and_exit(CommandArgs)
+	
+		

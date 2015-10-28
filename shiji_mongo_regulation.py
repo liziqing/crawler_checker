@@ -89,6 +89,10 @@ class MongoRegulation:
                 logger.error(self.item_error_msg(collection, item_id, item_type))
         except KeyError, e:
             logger.error(item_type+"is KeyError")
+
+    def print_msg(self, msg):
+        print msg
+
         
         
 
