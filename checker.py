@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python
 from pymongo import MongoClient
 from shiji_mongo_regulation import MongoRegulation
 from pylogger import Pylogger
