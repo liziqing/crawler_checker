@@ -21,9 +21,9 @@ class Pylogger:
         except OSError, e:
             print 'please mkdir log path!'
             sys.exit(1)
-        log_dir = log_dir+'/'+str(now)+".log"
+        log_path = log_dir+'/'+str(now)+".log"
         # 创建一个handler，用于写入日志文件 
-        fh = logging.FileHandler(log_dir) 
+        fh = logging.FileHandler(log_path) 
         fh.setLevel(logging.ERROR) 
            
     #     # 再创建一个handler，用于输出到控制台 
@@ -41,4 +41,7 @@ class Pylogger:
            
         # 记录一条日志 
     #     logger.info('foorbar') 
+        print '##################################################'
+        print 'log dir:  '+log_path
+        print '##################################################'
         return logger
