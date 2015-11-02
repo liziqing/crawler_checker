@@ -6,7 +6,7 @@ from datetime import datetime
 
 from pysys_checker import Pysys
 # from beaker.container import logger
-class Pylogger:
+class Pylogger: 
     def init_log(self, args):   
         # 创建一个logger 
         logger = logging.getLogger('checker_logger') 
