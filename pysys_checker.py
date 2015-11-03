@@ -9,20 +9,28 @@ class Pysys(object):
     def usage(self):
         print 'PyTest.py usage:'
         print '-h,--help: print help message.'
-        print '-v, --version: print script version'
-        print '-o, --output: input an output verb'
+        print '-V, --version: print script version'
+        print '-l, --log_path: log dir path'
     def version(self):
         print 'PyTest.py 1.0.0.0.1'
     def outPut(self, args):
         print 'Hello, %s'%args
     def main(self, argv):
-        longopts = ['help=', 'version=', 'output=', 'log_path=']
+        longopts = ['help=', 'version=', 'log_path=']
+        args_permission = 'hvl:'
+        if len(argv[1:]) == 0:
+            print "####################################"
+            print "             WARNING!"
+            print "####################################\n"
+            print "please specify a log directory using '-l' or '--log_path'!\n\n"
+            print "using '-h' or '--help' to get help info!"
+            sys.exit(1)
         try:
-            opts, args = getopt.getopt(argv[1:],'hh:l', longopts)
+            opts, args = getopt.getopt(argv[1:], args_permission, longopts)
         except getopt.GetoptError, err:
             print str(err)
             self.usage()
-            sys.exit(2)
+            sys.exit(1)
         for o, a in opts:
             if o in ('-h', '--help'):
                 self.usage()
