@@ -63,7 +63,7 @@ class MongoRegulation:
             # print 'Successfully goods_colors checked done!'
             # print "---------------------------------------------------\n"
             if data_color['name'] not in data['color']:
-                logger.error(self.item_error_msg('goods_colors '+data_color['id'], item_id, 'color'))
+                logger.error(self.item_error_msg('goods_colors ', item_id, 'color'))
             else: continue
 
          
@@ -80,7 +80,8 @@ class MongoRegulation:
         self.pyassert('goods_colors', item_id, 'name', data, unicode, logger)
         self.pyassert('goods_colors', item_id, 'cover', data, unicode, logger)
         self.pyassert('goods_colors', item_id, 'images', data, list, logger)
-        
+        if len(data['images']) == 0:
+            logger.error('goods_colors---the length of images is 0 ')
     #skuItem
     def sku_checker(self, data, logger):
         data_id = str(data['_id'])
