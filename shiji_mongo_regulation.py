@@ -81,7 +81,7 @@ class MongoRegulation:
         self.pyassert('goods_colors', item_id, 'cover', data, unicode, logger)
         self.pyassert('goods_colors', item_id, 'images', data, list, logger)
         if len(data['images']) == 0:
-            logger.error('goods_colors---the length of images is 0 ')
+            logger.error('goods_colors---the length of images'+item_id+' is 0 ')
     #skuItem
     def sku_checker(self, data, logger):
         data_id = str(data['_id'])
