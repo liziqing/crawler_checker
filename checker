@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 from pymongo import MongoClient
-import pycommand
 import sys, getopt
 
 from shiji_mongo_regulation import MongoRegulation
 from pylogger import Pylogger
-from command_args import CommandArgs
+#from command_args import CommandArgs
 from pysys_checker import Pysys
 
 connection = MongoClient('127.0.0.1', 27017)
